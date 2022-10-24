@@ -13,27 +13,43 @@ const getPlayerChoice = () => {
   return choice;
 }
 
-
-do{
-  const computerChoice = getComputerChoice().toUpperCase();
-  const playerChoice = getPlayerChoice().toUpperCase();
+const getResult = (computerChoice, playerChoice) => {
 
   const result = (options.indexOf(computerChoice) - options.indexOf(playerChoice) + 3) % 3;
 
   switch(result){
     case 0: 
       console.log("It is a Draw.");
-      break;
+      return 0;
 
     case 1:
-      console.log("Sorry, you have lost");
-      break;
+      console.log("Sorry, you have lost (" + computerChoice + " defeats " + playerChoice + " )");
+      return -1;
 
     case 2:
-      console.log("Yay! You won.");
-      break;
+      console.log("Yay! You won. (" + playerChoice + " defeats " + computerChoice + ")");
+      return 1;
   }
+}
 
-  console.log("Computer\'s Choice = " + computerChoice);
-  console.log("Your Choice = " + playerChoice);
-} while(confirm("Do You want to play again?"))
+const game = () => {
+  let score = 0;
+
+  do{
+    const computerChoice = getComputerChoice().toUpperCase();
+    const playerChoice = getPlayerChoice().toUpperCase();
+    score += getResult(computerChoice, playerChoice);
+    
+    console.log("Current score = " + score);  
+  } while(confirm("Do You want to play again?"))
+
+  return score;
+}
+
+const gameResult = (score) => {
+  if(score > 0) console.log("You won the tournament.");
+  else if(score < 0) console.log("You lost the tournament.");
+  else console.log("It was a tie");
+}
+
+gameResult(game());
