@@ -6,9 +6,9 @@ const getComputerChoice = () => {
 }
 
 const getPlayerChoice = () => {
-  let choice =  prompt("Please input your choice: ");
-  while(choice === null){
-    choice =  prompt("Please input your choice: ");
+  let choice =  prompt("Please input your choice: ").toUpperCase();
+  while(choice !== 'ROCK' && choice !== 'PAPER' && choice !== 'SCISSORS'){
+    choice =  prompt("Please input your choice: ").toUpperCase();
   }
   return choice;
 }
@@ -23,7 +23,7 @@ const getResult = (computerChoice, playerChoice) => {
       return 0;
 
     case 1:
-      console.log("Sorry, you have lost (" + computerChoice + " defeats " + playerChoice + " )");
+      console.log("Sorry, you have lost (" + playerChoice + " is defeated by " + computerChoice + " )");
       return -1;
 
     case 2:
@@ -36,8 +36,8 @@ const game = () => {
   let score = 0;
 
   do{
-    const computerChoice = getComputerChoice().toUpperCase();
-    const playerChoice = getPlayerChoice().toUpperCase();
+    const computerChoice = getComputerChoice();
+    const playerChoice = getPlayerChoice();
     score += getResult(computerChoice, playerChoice);
     
     console.log("Current score = " + score);  
